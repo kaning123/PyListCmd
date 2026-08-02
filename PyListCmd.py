@@ -1,14 +1,19 @@
+import sys
+
 class command(object):
-    def __init__(self,command_name,command_args_num:int) -> None:
+    def __init__(self,
+                 command_name,
+                 command_args_num:int) -> None:
         if command_name=='' or type(command_name)!=str:
             raise SyntaxError('invalid command name')
         command_name='-'+command_name
         self.command_name=command_name
         self.command_args=command_args_num
+        self.argv = sys.argv
     def command_exist(self):
         a=0
-        import sys
-        for i in sys.argv :
+        
+        for i in self.argv :
             if i == self.command_name:
                 self.exist=(True,a)
                 return True,a
@@ -18,12 +23,11 @@ class command(object):
     def delete_command(self):
         del self.command_name,self.command_args
     def run_command(self,func):
-        import sys
         if self.command_exist()[0]:
             FROM=self.exist[1]+1
             TO=self.exist[1]+self.command_args+1
             try:
-                args=tuple(sys.argv[FROM:TO])
+                args=tuple(self.argv[FROM:TO])
             except IndexError as err:
                 print('an error was found:')
                 print(err)
@@ -33,3 +37,6 @@ class command(object):
                 func(args)
             except TypeError:
                 raise SyntaxError('invalid function or args')
+
+    def set_argv(self,l):
+        self.argv = l
