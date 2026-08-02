@@ -1,7 +1,7 @@
 # PyListCmd - A Simple, Single-file ListParser
 It is a simple python program to create commands and use it. 
 The operation method is as follows:
-## 1.Create command (example:-a):
+## 1.Create command (Example: -a):
  ```python       
         try:
             from PyListCmd import command
